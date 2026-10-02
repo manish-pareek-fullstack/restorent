@@ -23,7 +23,6 @@ body {
   font-family: "Trebuchet MS", "Avenir Next", sans-serif;
   font-size: 16px;
   line-height: 1.6;
-  overflow-x: hidden;
 }
 
 * {
@@ -176,6 +175,13 @@ h3 em {
 
   [data-scroll-reveal="image"] {
     transform: translate3d(0, 22px, 0) scale(0.97);
+  }
+
+  @media (max-width: 767px) {
+    [data-scroll-reveal="left"],
+    [data-scroll-reveal="right"] {
+      transform: translate3d(0, 24px, 0);
+    }
   }
 
   [data-scroll-reveal][data-revealed="true"] {

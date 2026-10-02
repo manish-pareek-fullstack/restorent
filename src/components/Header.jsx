@@ -117,8 +117,12 @@ export default function Header() {
       )}
 
       <aside
-        className={`fixed right-0 top-0 z-50 h-full w-[86vw] max-w-sm transform border-l border-[#d8d4cb] bg-[#f8f5ef] text-[#1b2423] shadow-2xl transition-transform duration-300 md:hidden ${
-          open ? "translate-x-0" : "translate-x-full"
+        inert={!open}
+        aria-hidden={!open}
+        className={`fixed right-0 top-0 z-50 h-full w-[86vw] max-w-sm border-l border-[#d8d4cb] bg-[#f8f5ef] text-[#1b2423] shadow-2xl transition-[clip-path] duration-300 md:hidden ${
+          open
+            ? "[clip-path:inset(0)]"
+            : "pointer-events-none [clip-path:inset(0_0_0_100%)]"
         }`}
         aria-label="Mobile navigation"
       >
