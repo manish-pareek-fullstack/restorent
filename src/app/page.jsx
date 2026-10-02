@@ -28,7 +28,13 @@ export default function Home() {
     ).matches;
 
     if (prefersReducedMotion || !("IntersectionObserver" in window)) {
-      elements.forEach((element) => element.classList.add("is-visible"));
+      elements.forEach((element) => {
+        if (element.hasAttribute("data-scroll-reveal")) {
+          element.setAttribute("data-revealed", "true");
+        } else {
+          element.classList.add("is-visible");
+        }
+      });
       return undefined;
     }
 
@@ -47,7 +53,11 @@ export default function Home() {
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            entry.target.classList.add("is-visible");
+            if (entry.target.hasAttribute("data-scroll-reveal")) {
+              entry.target.setAttribute("data-revealed", "true");
+            } else {
+              entry.target.classList.add("is-visible");
+            }
             observer.unobserve(entry.target);
           }
         });

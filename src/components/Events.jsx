@@ -39,8 +39,8 @@ export default function Events() {
       className="reveal bg-[#1b2423] py-20 text-white md:py-28"
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="grid items-center gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:gap-[12%]">
-          <div>
+        <div className="grid min-w-0 grid-cols-1 items-start gap-8 md:grid-cols-[1.05fr_0.95fr] md:items-center md:gap-8 lg:gap-[12%]">
+          <div className="order-2 w-full min-w-0 max-w-full md:order-1">
             <SectionHeading
               eyebrow="Upcoming"
               title={
@@ -77,7 +77,7 @@ export default function Events() {
             </div>
 
             <div
-              className="mt-6 grid max-w-[420px] grid-cols-4 gap-3"
+              className="mt-6 grid w-full max-w-[420px] min-w-0 grid-cols-4 gap-3"
               aria-label="Time until event"
               data-reveal-stagger
             >
@@ -115,7 +115,7 @@ export default function Events() {
 
           <div
             data-scroll-reveal="image"
-            className="relative h-[420px] overflow-hidden rounded-[28px] md:h-[550px]"
+            className="relative order-1 h-[clamp(240px,72vw,320px)] w-full min-w-0 max-w-full overflow-hidden rounded-[28px] md:order-2 md:h-[550px]"
           >
             <Image
               src="/images/event-table.jpg"

@@ -178,7 +178,7 @@ h3 em {
     transform: translate3d(0, 22px, 0) scale(0.97);
   }
 
-  [data-scroll-reveal].is-visible {
+  [data-scroll-reveal][data-revealed="true"] {
     opacity: 1;
     transform: translate3d(0, 0, 0) scale(1);
     filter: blur(0);
@@ -222,7 +222,7 @@ h3 em {
   .reveal,
   .reveal.is-visible,
   [data-scroll-reveal],
-  [data-scroll-reveal].is-visible {
+  [data-scroll-reveal][data-revealed="true"] {
     opacity: 1;
     transform: none;
     filter: none;

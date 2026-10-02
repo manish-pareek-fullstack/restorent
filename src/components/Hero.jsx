@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 
 const slides = [
   {
@@ -49,6 +50,7 @@ const slides = [
 
 export default function Hero() {
   const [activeIndex, setActiveIndex] = useState(0);
+  const pointerStart = useRef(null);
 
   useEffect(() => {
     const prefersReducedMotion = window.matchMedia(
@@ -66,23 +68,69 @@ export default function Hero() {
 
   const currentSlide = slides[activeIndex];
 
+  const handlePointerDown = (event) => {
+    if (
+      (event.pointerType !== "touch" && event.pointerType !== "pen") ||
+      (event.target instanceof Element && event.target.closest("a, button"))
+    ) {
+      return;
+    }
+
+    pointerStart.current = { x: event.clientX, y: event.clientY };
+    event.currentTarget.setPointerCapture(event.pointerId);
+  };
+
+  const handlePointerUp = (event) => {
+    const start = pointerStart.current;
+    pointerStart.current = null;
+
+    if (!start) return;
+
+    const deltaX = event.clientX - start.x;
+    const deltaY = event.clientY - start.y;
+
+    if (Math.abs(deltaX) < 48 || Math.abs(deltaX) < Math.abs(deltaY) * 1.2) {
+      return;
+    }
+
+    setActiveIndex(
+      (current) =>
+        (current + (deltaX < 0 ? 1 : -1) + slides.length) % slides.length,
+    );
+  };
+
+  const handlePointerCancel = () => {
+    pointerStart.current = null;
+  };
+
   return (
     <section
       id="home"
       aria-live="polite"
-      className="relative flex min-h-[680px] items-center overflow-hidden bg-[#171e1d] text-white md:min-h-[760px]"
+      onPointerDown={handlePointerDown}
+      onPointerUp={handlePointerUp}
+      onPointerCancel={handlePointerCancel}
+      className="relative flex min-h-[680px] touch-pan-y items-start overflow-hidden bg-[#171e1d] text-white md:min-h-[760px] md:items-center"
     >
       <div className="absolute inset-0" aria-hidden="true">
         {slides.map((slide, index) => (
           <div
             key={slide.badge}
-            className={`absolute inset-0 bg-cover bg-center transition-all duration-1000 ${
+            className={`absolute inset-0 transition-all duration-1000 ${
               index === activeIndex
                 ? "hero-photo-settle scale-100 opacity-100"
                 : "scale-110 opacity-0"
             }`}
-            style={{ backgroundImage: `url(${slide.image})` }}
-          />
+          >
+            <Image
+              src={slide.image}
+              alt=""
+              fill
+              sizes="100vw"
+              preload={index === 0}
+              className="object-cover object-center"
+            />
+          </div>
         ))}
       </div>
       <div className="hero-overlay-enter absolute inset-0 bg-[linear-gradient(90deg,rgba(14,25,24,0.82),rgba(20,29,28,0.32)_60%,rgba(20,29,28,0.18))]" />
@@ -171,7 +219,7 @@ export default function Hero() {
         </button>
       </div>
 
-      <div className="absolute bottom-8 left-4 z-10 flex items-center gap-3 text-[10px] uppercase tracking-[0.12em] text-white/70 sm:left-8 lg:left-[max(32px,calc((100%-1180px)/2))]">
+      <div className="absolute bottom-[88px] left-4 right-4 z-10 flex flex-wrap items-center gap-3 text-[10px] uppercase tracking-[0.12em] text-white/70 md:bottom-8 md:left-8 md:right-auto md:flex-nowrap lg:left-[max(32px,calc((100%-1180px)/2))]">
         <span>{currentSlide.badge}</span>
         <i className="h-px w-16 bg-white/50" />
         <span>{currentSlide.info}</span>
