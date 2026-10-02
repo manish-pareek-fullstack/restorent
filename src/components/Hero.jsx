@@ -110,7 +110,7 @@ export default function Hero() {
       onPointerDown={handlePointerDown}
       onPointerUp={handlePointerUp}
       onPointerCancel={handlePointerCancel}
-      className="relative flex min-h-[680px] touch-pan-y items-start overflow-hidden bg-[#171e1d] text-white md:min-h-[760px] md:items-center"
+      className="relative flex min-h-[680px] touch-pan-y items-start overflow-hidden bg-[#171e1d] text-white pb-16 md:min-h-[760px] md:items-center md:pb-0"
     >
       <div className="absolute inset-0" aria-hidden="true">
         {slides.map((slide, index) => (
@@ -181,7 +181,7 @@ export default function Hero() {
         </div>
       </div>
 
-      <div className="absolute bottom-8 right-4 z-10 flex items-center gap-3 sm:right-8 lg:right-[max(32px,calc((100%-1180px)/2))]">
+      <div className="absolute bottom-6 left-4 right-4 z-10 flex items-center justify-between gap-3 sm:right-8 lg:right-[max(32px,calc((100%-1180px)/2))]">
         <button
           type="button"
           aria-label="Previous slide"
@@ -190,7 +190,7 @@ export default function Hero() {
               (current) => (current - 1 + slides.length) % slides.length,
             )
           }
-          className="flex h-11 w-11 items-center justify-center rounded-full border border-white/40 bg-white/5 text-lg text-white transition hover:-translate-y-0.5 hover:bg-white/15"
+          className="flex h-10 w-10 items-center justify-center rounded-full border border-white/40 bg-white/5 text-lg text-white transition hover:-translate-y-0.5 hover:bg-white/15"
         >
           ←
         </button>
@@ -213,16 +213,16 @@ export default function Hero() {
           onClick={() =>
             setActiveIndex((current) => (current + 1) % slides.length)
           }
-          className="flex h-11 w-11 items-center justify-center rounded-full border border-white/40 bg-white/5 text-lg text-white transition hover:-translate-y-0.5 hover:bg-white/15"
+          className="flex h-10 w-10 items-center justify-center rounded-full border border-white/40 bg-white/5 text-lg text-white transition hover:-translate-y-0.5 hover:bg-white/15"
         >
           →
         </button>
       </div>
 
-      <div className="absolute bottom-[88px] left-4 right-4 z-10 flex flex-wrap items-center gap-3 text-[10px] uppercase tracking-[0.12em] text-white/70 md:bottom-8 md:left-8 md:right-auto md:flex-nowrap lg:left-[max(32px,calc((100%-1180px)/2))]">
-        <span>{currentSlide.badge}</span>
-        <i className="h-px w-16 bg-white/50" />
-        <span>{currentSlide.info}</span>
+      <div className="absolute bottom-[96px] left-4 right-4 z-10 flex flex-wrap items-center gap-2 text-[11px] uppercase tracking-[0.12em] text-white/90 sm:gap-3 md:bottom-8 md:left-8 md:right-auto md:flex-nowrap lg:left-[max(32px,calc((100%-1180px)/2))]">
+        <span className="min-w-0 truncate">{currentSlide.badge}</span>
+        <i className="h-px w-12 bg-white/50 sm:w-16" />
+        <span className="min-w-0 truncate">{currentSlide.info}</span>
       </div>
     </section>
   );
