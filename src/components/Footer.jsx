@@ -77,22 +77,22 @@ export default function Footer() {
             </p>
             <div className="mt-5 space-y-4 text-[14px] leading-7 text-white/70">
               <p>
-                8th floor, 379 Hudson St
+                XXXXXXXX
                 <br />
-                New York, NY 10018
+                XXXXXXXX
               </p>
               <div>
                 <a
                   href="tel:+1967166879"
                   className="block transition-colors hover:text-white"
                 >
-                  +1 96 716 6879
+                  XXXXXXXX
                 </a>
                 <a
                   href="mailto:hello@patoplace.com"
                   className="block transition-colors hover:text-white"
                 >
-                  hello@patoplace.com
+                  XXXXXXXX
                 </a>
               </div>
             </div>

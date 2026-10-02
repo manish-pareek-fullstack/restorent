@@ -24,9 +24,9 @@ export default function Contact() {
               <span className="mb-2 block text-[10px] font-bold uppercase tracking-[0.14em] text-[#c9573d]">
                 Visit
               </span>
-              8th floor, 379 Hudson St
+              XXXXXXXX
               <br />
-              New York, NY 10018
+              XXXXXXXX
             </p>
             <p>
               <span className="mb-2 block text-[10px] font-bold uppercase tracking-[0.14em] text-[#c9573d]">
@@ -36,13 +36,13 @@ export default function Contact() {
                 href="tel:+1967166879"
                 className="block transition-colors hover:text-[#c9573d]"
               >
-                +1 96 716 6879
+                XXXXXXXX
               </a>
               <a
                 href="mailto:hello@patoplace.com"
                 className="block transition-colors hover:text-[#c9573d]"
               >
-                hello@patoplace.com
+                XXXXXXXX
               </a>
             </p>
           </div>
