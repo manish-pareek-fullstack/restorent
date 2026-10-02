@@ -36,9 +36,7 @@ export default function Reviews() {
       "(prefers-reduced-motion: reduce)",
     ).matches;
 
-    if (prefersReducedMotion) {
-      return undefined;
-    }
+    if (prefersReducedMotion) return undefined;
 
     const timer = window.setInterval(() => {
       setActive((current) => (current + 1) % reviews.length);
@@ -50,8 +48,8 @@ export default function Reviews() {
   const review = reviews[active];
 
   return (
-    <section className="reviews section-pad section-cream reveal">
-      <div className="container reviews-inner">
+    <section className="reveal bg-[#eee9df] py-20 md:py-28">
+      <div className="mx-auto grid max-w-7xl gap-10 px-4 sm:px-6 lg:grid-cols-[0.72fr_1.28fr] lg:items-center lg:gap-[8%] lg:px-8">
         <SectionHeading
           eyebrow="Customers say"
           title={
@@ -62,15 +60,40 @@ export default function Reviews() {
             </>
           }
         />
-        <div className="review-card" key={review.name}>
-          <div className="review-avatar">
-            <Image src={review.image} alt={review.name} fill sizes="72px" />
+        <div
+          key={review.name}
+          data-reveal-stagger
+          className="relative pl-24 md:pl-28"
+        >
+          <div
+            data-scroll-reveal="image"
+            className="absolute left-0 top-0 h-[72px] w-[72px] overflow-hidden rounded-full"
+          >
+            <Image
+              src={review.image}
+              alt={review.name}
+              fill
+              sizes="72px"
+              className="object-cover"
+            />
           </div>
-          <blockquote>“{review.quote}”</blockquote>
-          <p className="review-author">
-            {review.name} <span>· {review.city}</span>
+          <blockquote
+            data-scroll-reveal="right"
+            className="max-w-[620px] font-serif text-[clamp(1.7rem,3vw,2.5rem)] leading-[1.18] text-[#1b2423]"
+          >
+            “{review.quote}”
+          </blockquote>
+          <p
+            data-scroll-reveal="up"
+            className="mt-6 text-[11px] font-bold uppercase tracking-[0.14em] text-[#c9573d]"
+          >
+            {review.name}{" "}
+            <span className="text-[#5d6a66]">· {review.city}</span>
           </p>
-          <div className="review-controls">
+          <div
+            data-scroll-reveal="up"
+            className="mt-8 flex items-center gap-4 text-[10px] uppercase tracking-[0.1em] text-[#5d6a66]"
+          >
             <button
               aria-label="Previous review"
               onClick={() =>
@@ -78,6 +101,7 @@ export default function Reviews() {
                   (current) => (current + reviews.length - 1) % reviews.length,
                 )
               }
+              className="flex h-9 w-9 items-center justify-center border border-[#d7d1ca] bg-transparent text-[#1b2423] transition-colors hover:bg-white"
             >
               ←
             </button>
@@ -90,6 +114,7 @@ export default function Reviews() {
               onClick={() =>
                 setActive((current) => (current + 1) % reviews.length)
               }
+              className="flex h-9 w-9 items-center justify-center border border-[#d7d1ca] bg-transparent text-[#1b2423] transition-colors hover:bg-white"
             >
               →
             </button>

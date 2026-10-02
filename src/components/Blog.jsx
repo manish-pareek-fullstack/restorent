@@ -24,8 +24,8 @@ const posts = [
 
 export default function Blog() {
   return (
-    <section className="blog section-pad" id="journal">
-      <div className="container">
+    <section id="journal" className="reveal bg-[#f8f5ef] py-20 md:py-28">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <SectionHeading
           eyebrow="Latest news"
           title={
@@ -36,22 +36,55 @@ export default function Blog() {
             </>
           }
         />
-        <div className="blog-grid">
+        <div
+          className="mt-14 grid gap-7 md:grid-cols-2 xl:grid-cols-3"
+          data-reveal-stagger
+        >
           {posts.map((post) => (
-            <article className="post" key={post.title}>
-              <a className="post-image" href="#contact">
+            <article
+              key={post.title}
+              data-reveal-stagger
+              className="group rounded-[20px] bg-transparent"
+            >
+              <a
+                href="#contact"
+                data-scroll-reveal="image"
+                className="group relative block h-[255px] overflow-hidden rounded-[18px]"
+              >
                 <Image
                   src={post.image}
-                  alt=""
+                  alt={post.title}
                   fill
                   sizes="(max-width: 700px) 100vw, 33vw"
+                  className="object-cover transition duration-700 group-hover:scale-105"
                 />
-                <span>Read story ↗</span>
+                <span className="absolute bottom-3 right-3 rounded-full bg-white px-3 py-2 text-[10px] font-bold uppercase tracking-[0.1em] text-[#1b2423]">
+                  Read story ↗
+                </span>
               </a>
-              <p className="post-date">{post.date}</p>
-              <h3>{post.title}</h3>
-              <p>{post.text}</p>
-              <a className="text-link" href="#contact">
+              <p
+                data-scroll-reveal="up"
+                className="mt-5 text-[10px] font-bold uppercase tracking-[0.13em] text-[#c9573d]"
+              >
+                {post.date}
+              </p>
+              <h3
+                data-scroll-reveal="up"
+                className="mt-2 max-w-[340px] font-serif text-[27px] leading-[1.05] text-[#1b2423]"
+              >
+                {post.title}
+              </h3>
+              <p
+                data-scroll-reveal="up"
+                className="mt-3 max-w-[330px] text-[14px] leading-7 text-[#5d6a66]"
+              >
+                {post.text}
+              </p>
+              <a
+                href="#contact"
+                data-scroll-reveal="left"
+                className="mt-5 inline-flex items-center gap-2 border-b border-[#1b2423]/60 pb-1 text-[12px] font-bold uppercase tracking-[0.12em] text-[#1b2423] transition-colors hover:text-[#c9573d]"
+              >
                 Continue reading <span aria-hidden="true">↗</span>
               </a>
             </article>

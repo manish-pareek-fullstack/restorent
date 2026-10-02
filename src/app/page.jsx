@@ -13,12 +13,11 @@ import VideoSection from "@/components/VideoSection";
 import Blog from "@/components/Blog";
 import Newsletter from "@/components/Newsletter";
 import Contact from "@/components/Contact";
-import Gallery from "@/components/Gallery";
 import Footer from "@/components/Footer";
 
 export default function Home() {
   useEffect(() => {
-    const elements = document.querySelectorAll(".reveal");
+    const elements = document.querySelectorAll(".reveal, [data-scroll-reveal]");
 
     if (!elements.length) {
       return undefined;
@@ -28,10 +27,21 @@ export default function Home() {
       "(prefers-reduced-motion: reduce)",
     ).matches;
 
-    if (prefersReducedMotion) {
+    if (prefersReducedMotion || !("IntersectionObserver" in window)) {
       elements.forEach((element) => element.classList.add("is-visible"));
       return undefined;
     }
+
+    document.querySelectorAll("[data-reveal-stagger]").forEach((group) => {
+      group
+        .querySelectorAll(":scope > [data-scroll-reveal]")
+        .forEach((element, index) => {
+          element.style.setProperty(
+            "--reveal-delay",
+            `${Math.min(index * 90, 360)}ms`,
+          );
+        });
+    });
 
     const observer = new IntersectionObserver(
       (entries) => {
@@ -44,10 +54,55 @@ export default function Home() {
       },
       { threshold: 0.14, rootMargin: "0px 0px -40px 0px" },
     );
+    const observed = new WeakSet();
+    const observeTargets = (root) => {
+      const targets = [];
+      if (root.matches?.(".reveal, [data-scroll-reveal]")) {
+        targets.push(root);
+      }
+      targets.push(...root.querySelectorAll(".reveal, [data-scroll-reveal]"));
 
-    elements.forEach((element) => observer.observe(element));
+      targets.forEach((element) => {
+        if (observed.has(element)) return;
+        observed.add(element);
 
-    return () => observer.disconnect();
+        const group = element.parentElement;
+        if (
+          element.hasAttribute("data-scroll-reveal") &&
+          group?.hasAttribute("data-reveal-stagger")
+        ) {
+          const siblings = [
+            ...group.querySelectorAll(":scope > [data-scroll-reveal]"),
+          ];
+          const index = siblings.indexOf(element);
+          element.style.setProperty(
+            "--reveal-delay",
+            `${Math.min(index * 90, 360)}ms`,
+          );
+        }
+
+        observer.observe(element);
+      });
+    };
+
+    observeTargets(document);
+
+    const mutations = new MutationObserver((records) => {
+      records.forEach((record) => {
+        record.addedNodes.forEach((node) => {
+          if (node.nodeType === Node.ELEMENT_NODE) observeTargets(node);
+        });
+      });
+    });
+    mutations.observe(document.querySelector("main"), {
+      childList: true,
+      subtree: true,
+    });
+
+    return () => {
+      observer.disconnect();
+      mutations.disconnect();
+    };
   }, []);
 
   return (
@@ -65,7 +120,6 @@ export default function Home() {
         <Blog />
         <Newsletter />
         <Contact />
-        <Gallery />
       </main>
       <Footer />
     </>

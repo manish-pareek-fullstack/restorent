@@ -48,8 +48,8 @@ export default function Menu() {
       : categories.filter((category) => category.name === activeTab);
 
   return (
-    <section className="menu-section section-pad reveal" id="menu">
-      <div className="container">
+    <section id="menu" className="reveal bg-[#f8f5ef] py-20 md:py-28">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <SectionHeading
           eyebrow="From our kitchen"
           title={
@@ -62,34 +62,58 @@ export default function Menu() {
           text="Italian instinct, New York energy. Our menus change often, but the welcome stays the same."
         />
 
-        <div className="menu-tabs" aria-label="Menu categories">
+        <div
+          className="mt-10 flex flex-wrap gap-3"
+          aria-label="Menu categories"
+          data-reveal-stagger
+        >
           {tabs.map((tab) => (
             <button
               key={tab}
               type="button"
-              className={tab === activeTab ? "is-active" : ""}
               onClick={() => setActiveTab(tab)}
+              data-scroll-reveal="up"
+              className={`rounded-full border px-4 py-2 text-[10px] font-bold uppercase tracking-[0.12em] transition-all ${
+                tab === activeTab
+                  ? "border-[#1b2423] bg-[#1b2423] text-white"
+                  : "border-[#d7d1ca] bg-transparent text-[#5d6a66] hover:border-[#1b2423] hover:text-[#1b2423]"
+              }`}
             >
               {tab}
             </button>
           ))}
         </div>
 
-        <div className="menu-grid">
+        <div
+          className="mt-8 grid gap-4 md:grid-cols-2 xl:grid-cols-3"
+          data-reveal-stagger
+        >
           {visibleCategories.map((category, index) => (
-            <a className="menu-card" href="#reserve" key={category.name}>
+            <a
+              key={`${activeTab}-${category.name}`}
+              href="#reserve"
+              data-scroll-reveal="image"
+              className="group relative min-h-[270px] overflow-hidden rounded-[22px] text-white"
+            >
               <Image
                 src={category.image}
                 alt={category.name}
                 fill
                 sizes="(max-width: 600px) 100vw, 33vw"
+                className="object-cover transition duration-700 group-hover:scale-105"
               />
-              <div className="menu-card-shade" />
-              <div className="menu-card-content">
-                <span>{String(index + 1).padStart(2, "0")}</span>
-                <h3>{category.name}</h3>
-                <p>{category.detail}</p>
-                <b aria-hidden="true">↗</b>
+              <div className="absolute inset-0 bg-[linear-gradient(180deg,transparent_20%,rgba(13,25,24,0.86))]" />
+              <div className="absolute inset-x-6 bottom-6 left-6">
+                <span className="text-[11px] uppercase tracking-[0.12em] text-[#f3a994]">
+                  {String(index + 1).padStart(2, "0")}
+                </span>
+                <h3 className="mt-2 font-serif text-[31px] leading-none text-white">
+                  {category.name}
+                </h3>
+                <p className="mt-2 text-[12px] text-white/70">
+                  {category.detail}
+                </p>
+                <span className="absolute bottom-0 right-0 text-[22px]">↗</span>
               </div>
             </a>
           ))}
